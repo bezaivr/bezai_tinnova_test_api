@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_07_004824) do
+ActiveRecord::Schema.define(version: 2021_08_27_040929) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "beers", force: :cascade do |t|
+    t.integer "api_id"
+    t.datetime "seen_at"
+    t.boolean "favorite"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_beers_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "name"
@@ -27,4 +37,5 @@ ActiveRecord::Schema.define(version: 2019_02_07_004824) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "beers", "users"
 end
